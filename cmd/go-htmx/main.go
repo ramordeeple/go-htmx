@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"log"
 	"net/http"
 	"os"
 	"text/template"
@@ -59,5 +58,5 @@ func main() {
 	http.HandleFunc("/", h1)
 	http.HandleFunc("/add-film/", h2)
 
-	log.Fatal(http.ListenAndServe(":"+port, nil))
+	http.ListenAndServe("127.0.0.1:"+port, nil)
 }
