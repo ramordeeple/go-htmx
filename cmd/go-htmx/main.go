@@ -20,7 +20,7 @@ func main() {
 		port = "8000"
 	}
 
-	fmt.Println("Server started on port:", port)
+	fmt.Println("Server is running on port:", port)
 
 	h1 := func(w http.ResponseWriter, r *http.Request) {
 		films := map[string][]Film{
