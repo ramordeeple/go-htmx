@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 	"text/template"
 	"time"
 )
@@ -14,7 +15,12 @@ type Film struct {
 }
 
 func main() {
-	fmt.Println("Server started on http://localhost:8000")
+	port := os.Getenv("APP_PORT")
+	if port == "" {
+		port = "8000"
+	}
+
+	fmt.Println("Server started on port:", port)
 
 	h1 := func(w http.ResponseWriter, r *http.Request) {
 		films := map[string][]Film{
@@ -53,5 +59,5 @@ func main() {
 	http.HandleFunc("/", h1)
 	http.HandleFunc("/add-film/", h2)
 
-	log.Fatal(http.ListenAndServe(":8000", nil))
+	log.Fatal(http.ListenAndServe(":"+port, nil))
 }

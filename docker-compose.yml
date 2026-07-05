@@ -4,6 +4,8 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: go-htmx
+    env_file:
+      - .env
     ports:
-      - "8000:8000"
+      - "${APP_PORT}:${APP_PORT}"
     restart: unless-stopped
