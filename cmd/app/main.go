@@ -14,32 +14,40 @@ type Film struct {
 }
 
 func main() {
-	fmt.Println("qwe")
+	fmt.Println("Server started on http://localhost:8000")
 
 	h1 := func(w http.ResponseWriter, r *http.Request) {
 		films := map[string][]Film{
 			"Films": {
-				{Title: "The Godfather", Director: "Francis Ford Coppolasso"},
+				{Title: "The Godfather", Director: "Francis Ford Coppola"},
 				{Title: "Blade Runner", Director: "Ridley Scott"},
 				{Title: "The Thing", Director: "John Carpenter"},
 			},
 		}
 
 		temp := template.Must(template.ParseFiles("index.html"))
-		temp.Execute(w, films)
+
+		err := temp.Execute(w, films)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+		}
 	}
 
 	h2 := func(w http.ResponseWriter, r *http.Request) {
 		time.Sleep(1 * time.Second)
+
 		title := r.PostFormValue("title")
 		director := r.PostFormValue("director")
 
-		//htmlStr := fmt.Sprintf("<li class='list-group-item bg-primary text-white'>%s - %s</li>", title, director)
-		// temp, _ := template.New("t").Parse(htmlStr)
-		// temp.Execute(w, nil)
-
 		temp := template.Must(template.ParseFiles("index.html"))
-		temp.ExecuteTemplate(w, "film-list-element", Film{Title: title, Director: director})
+
+		err := temp.ExecuteTemplate(w, "film-list-element", Film{
+			Title:    title,
+			Director: director,
+		})
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+		}
 	}
 
 	http.HandleFunc("/", h1)
