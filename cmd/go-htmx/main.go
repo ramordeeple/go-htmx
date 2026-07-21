@@ -27,6 +27,7 @@ func main() {
 				{Title: "The Godfather", Director: "Francis Ford Coppolasso"},
 				{Title: "Blade Runner", Director: "Ridley Scott"},
 				{Title: "The Thing", Director: "John Carpenter"},
+				{Title: "Hail Mary project", Director: "Jane Doe"},
 			},
 		}
 
